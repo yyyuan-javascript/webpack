@@ -57,7 +57,7 @@
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		"main": 0
+/******/ 		"home": 0
 /******/ 	};
 /******/
 /******/ 	var deferredModules = [];
@@ -148,22 +148,22 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./App/index.js","home~main"]);
+/******/ 	deferredModules.push(["./App/home.js","home~main"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./App/index.js":
-/*!**********************!*\
-  !*** ./App/index.js ***!
-  \**********************/
+/***/ "./App/home.js":
+/*!*********************!*\
+  !*** ./App/home.js ***!
+  \*********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App_sum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../App/sum */ \"./App/sum.js\");\n/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date */ \"./App/date.js\");\n\r\n\r\n\r\nconsole.log(\"main\",Object(_date__WEBPACK_IMPORTED_MODULE_1__[\"getDate\"])(),Object(_App_sum__WEBPACK_IMPORTED_MODULE_0__[\"add1\"])(1));\r\n\n\n//# sourceURL=webpack:///./App/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sum */ \"./App/sum.js\");\n/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date */ \"./App/date.js\");\n\r\n\r\n\r\nconsole.log('welcome', Object(_date__WEBPACK_IMPORTED_MODULE_1__[\"getDate\"])(), Object(_sum__WEBPACK_IMPORTED_MODULE_0__[\"add\"])(1,2));\n\n//# sourceURL=webpack:///./App/home.js?");
 
 /***/ })
 

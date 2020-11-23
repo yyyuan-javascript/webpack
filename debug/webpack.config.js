@@ -3,12 +3,12 @@ const path = require("path");
 // const CusPluginPlugin1 = require("cus-plugin-plugin1");
 
 module.exports = {
-	devtool: "source-map",
+	// devtool: "source-map",
 	context: __dirname,
 	mode: "development",
 	entry: {
-		main: "./App/index.js"
-		// index2: './App/index2.js',
+		main: "./App/index.js",
+		home: './App/home.js',
 	},
 	output: {
 		path: path.resolve(__dirname, "./dist"),
@@ -16,11 +16,11 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			// {
-			// 	test: /\.css$/,
-			// 	use: ["style-loader", "css-loader"],
-			// 	include: [path.resolve(__dirname, "App")]
-			// },
+			{
+				test: /\.css$/,
+				use: ["style-loader", "css-loader"],
+				include: [path.resolve(__dirname, "App")]
+			},
 			// {
 			// 	test: /\.js$/,
 			// 	use: [
@@ -34,7 +34,14 @@ module.exports = {
 				use: ["url-loader"]
 			}
 		]
-	}
+	},
+	optimization: {
+		splitChunks: {
+			chunks: "all",
+			minSize: 0, // 默认是30kb，minSize设置为0之后
+		  }
+	  },
+	
 	// plugins: [new CusPluginPlugin1()]
 	// plugins: [new HtmlWebpackPlugin()]
 };
