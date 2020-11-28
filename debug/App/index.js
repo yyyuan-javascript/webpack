@@ -1,4 +1,11 @@
-import {add1} from '../App/sum';
+import {showContent, addBtn} from './dom';
 import {getDate} from './date';
 
-console.log("main",getDate(),add1(1));
+const handleClick = () => {
+  import(/* webpackChunkName: "async" */"./async").then(({content}) => {
+    console.log("main",getDate());
+    showContent(content);
+  });
+};
+
+addBtn(handleClick);

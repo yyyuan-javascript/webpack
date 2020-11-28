@@ -137,7 +137,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/static/";
+/******/ 	__webpack_require__.p = "E:\\trip_work\\webpack\\debug\\dist/";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
@@ -163,7 +163,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sum */ \"./App/sum.js\");\n/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date */ \"./App/date.js\");\n\r\n\r\n\r\nconsole.log('welcome', Object(_date__WEBPACK_IMPORTED_MODULE_1__[\"getDate\"])(), Object(_sum__WEBPACK_IMPORTED_MODULE_0__[\"add\"])(1,2));\n\n//# sourceURL=webpack:///./App/home.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./date */ \"./App/date.js\");\n// import {add} from './sum';\r\n\r\n\r\n// console.log('welcome', getDate(), add(1,2));\r\nconsole.log('welcome', Object(_date__WEBPACK_IMPORTED_MODULE_0__[\"getDate\"])());\n\n//# sourceURL=webpack:///./App/home.js?");
 
 /***/ })
 

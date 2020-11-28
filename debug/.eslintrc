@@ -1,0 +1,83 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "plugins": ["react", "html"],
+  "settings": {
+    "react": {
+      "version": "16.0"
+    },
+    "import/resolver": {
+      "webpack" : {
+        "config": "build/webpack.js"
+      }
+    }
+  },
+  "rules": {
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": ["children"],
+        "skipUndeclared": true
+      }
+    ],
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/no-array-index-key": "off",
+    "react/destructuring-assignment": "off",
+    "react/sort-comp": "off",
+    "react/no-multi-comp": "off",
+
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/label-has-associated-control": ["error", {
+      "depth": 3
+    }],
+
+    "import/prefer-default-export": "off",
+
+    "no-console": "off",
+    "arrow-body-style": "off",
+    "prefer-template": "off",
+    "prefer-destructuring": "off",
+    "arrow-parens": "off",
+    "array-bracket-spacing": "off",
+    "object-curly-newline": "off",
+    "no-use-before-define": ["error", { "functions": false, "classes": true }],
+    "max-len": ["error", 128],
+    "no-param-reassign": ["error", { "props": false }],
+    "no-underscore-dangle": "off",
+    "no-nested-ternary": "off",
+    "no-unused-vars": ["error", {
+      "argsIgnorePattern": "^_",
+      "ignoreRestSiblings": true,
+      "args": "after-used"
+    }],
+    "no-unused-expressions": ["error", { 
+      "allowShortCircuit": true, 
+      "allowTernary": true 
+    } ],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ],
+    "linebreak-style": [0 ,"error", "windows"]
+  }
+}

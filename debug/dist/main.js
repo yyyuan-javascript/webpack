@@ -62,6 +62,11 @@
 /******/
 /******/ 	var deferredModules = [];
 /******/
+/******/ 	// script path function
+/******/ 	function jsonpScriptSrc(chunkId) {
+/******/ 		return __webpack_require__.p + "" + ({"async":"async"}[chunkId]||chunkId) + ".js"
+/******/ 	}
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -86,6 +91,67 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var promises = [];
+/******/
+/******/
+/******/ 		// JSONP chunk loading for javascript
+/******/
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
+/******/
+/******/ 			// a Promise means "currently loading".
+/******/ 			if(installedChunkData) {
+/******/ 				promises.push(installedChunkData[2]);
+/******/ 			} else {
+/******/ 				// setup Promise in chunk cache
+/******/ 				var promise = new Promise(function(resolve, reject) {
+/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 				});
+/******/ 				promises.push(installedChunkData[2] = promise);
+/******/
+/******/ 				// start chunk loading
+/******/ 				var script = document.createElement('script');
+/******/ 				var onScriptComplete;
+/******/
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.src = jsonpScriptSrc(chunkId);
+/******/
+/******/ 				// create error before stack unwound to get useful stacktrace later
+/******/ 				var error = new Error();
+/******/ 				onScriptComplete = function (event) {
+/******/ 					// avoid mem leaks in IE.
+/******/ 					script.onerror = script.onload = null;
+/******/ 					clearTimeout(timeout);
+/******/ 					var chunk = installedChunks[chunkId];
+/******/ 					if(chunk !== 0) {
+/******/ 						if(chunk) {
+/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 							var realSrc = event && event.target && event.target.src;
+/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 							error.name = 'ChunkLoadError';
+/******/ 							error.type = errorType;
+/******/ 							error.request = realSrc;
+/******/ 							chunk[1](error);
+/******/ 						}
+/******/ 						installedChunks[chunkId] = undefined;
+/******/ 					}
+/******/ 				};
+/******/ 				var timeout = setTimeout(function(){
+/******/ 					onScriptComplete({ type: 'timeout', target: script });
+/******/ 				}, 120000);
+/******/ 				script.onerror = script.onload = onScriptComplete;
+/******/ 				document.head.appendChild(script);
+/******/ 			}
+/******/ 		}
+/******/ 		return Promise.all(promises);
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -137,7 +203,10 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/static/";
+/******/ 	__webpack_require__.p = "E:\\trip_work\\webpack\\debug\\dist/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
@@ -155,6 +224,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./App/dom.js":
+/*!********************!*\
+  !*** ./App/dom.js ***!
+  \********************/
+/*! exports provided: add, showContent, addBtn */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"add\", function() { return add; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"showContent\", function() { return showContent; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addBtn\", function() { return addBtn; });\nconst add = (a,b) => {\r\n    return a+b;\r\n};\r\n\r\nconst showContent = (content) => {\r\n    const div = document.createElement('div');\r\n    div.innerText = content;\r\n    document.body.appendChild(div);\r\n  };\r\n\r\nconst addBtn = (handleClick) => {\r\n    const btn = document.createElement('button');\r\n    btn.innerText='Click to load async.js';\r\n    btn.onclick = handleClick;\r\n    document.body.appendChild(btn);\r\n};\n\n//# sourceURL=webpack:///./App/dom.js?");
+
+/***/ }),
+
 /***/ "./App/index.js":
 /*!**********************!*\
   !*** ./App/index.js ***!
@@ -163,7 +244,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App_sum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../App/sum */ \"./App/sum.js\");\n/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date */ \"./App/date.js\");\n\r\n\r\n\r\nconsole.log(\"main\",Object(_date__WEBPACK_IMPORTED_MODULE_1__[\"getDate\"])(),Object(_App_sum__WEBPACK_IMPORTED_MODULE_0__[\"add1\"])(1));\r\n\n\n//# sourceURL=webpack:///./App/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ \"./App/dom.js\");\n/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./date */ \"./App/date.js\");\n\r\n\r\n\r\nconst handleClick = () => {\r\n  __webpack_require__.e(/*! import() | async */ \"async\").then(__webpack_require__.bind(null, /*! ./async */ \"./App/async.js\")).then(({content}) => {\r\n    console.log(\"main\",Object(_date__WEBPACK_IMPORTED_MODULE_1__[\"getDate\"])());\r\n    Object(_dom__WEBPACK_IMPORTED_MODULE_0__[\"showContent\"])(content);\r\n  });\r\n};\r\n\r\nObject(_dom__WEBPACK_IMPORTED_MODULE_0__[\"addBtn\"])(handleClick);\n\n//# sourceURL=webpack:///./App/index.js?");
 
 /***/ })
 
