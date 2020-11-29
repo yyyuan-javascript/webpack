@@ -6,7 +6,7 @@ class SplitChunksPlugin {
       compiler.hooks.emit.tapAsync(
         'SplitChunksPlugin',
         (compilation, callback) => {
-          console.log('This is an SplitChunksPlugin12!');
+          console.log('This is an SplitChunksPlugin!');
           // console.log('Here’s the `compilation` object which represents a single build of assets:', compilation);
   
           // Manipulate the build using the plugin API provided by webpack
