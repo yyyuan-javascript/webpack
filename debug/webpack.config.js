@@ -4,15 +4,15 @@ const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const SplitChunksPlugin = require('./webpack-plugins/split-chunks-plugin');
-const [isAnalyze] = process.argv.slice(2)||[];
-
+const [params0] = process.argv.slice(2)||[];
+const isAnalyze = params0 === 'analyze';
 module.exports = {
 	// devtool: "source-map",
 	context: __dirname,
 	mode: "development",
 	entry: {
-		main: "./App/index.js",
-		home: './App/home.js',
+		main: "./src/index.js",
+		home: './src/home.js',
 	},
 	output: {
 		path: path.resolve(__dirname, "./dist"),
@@ -23,7 +23,7 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: ["style-loader", "css-loader"],
-				include: [path.resolve(__dirname, "App")]
+				include: [path.resolve(__dirname, "src")]
 			},
 			// {
 			// 	test: /\.js$/,
@@ -31,7 +31,7 @@ module.exports = {
 			// 		{ loader: "cus-loader-loader1", options: { testPar1: "test" } },
 			// 		{ loader: "cus-loader-loader2" }
 			// 	],
-			// 	include: [path.resolve(__dirname, "App")]
+			// 	include: [path.resolve(__dirname, "src")]
 			// }
 			{
 				test: /\.png/,
@@ -39,26 +39,30 @@ module.exports = {
 			}
 		]
 	},
-	// optimization: {
-	// 	splitChunks: {
-	// 		chunks: "all",
-	// 		minSize: 0, // 默认是30kb，minSize设置为0之后
-	// 		// cacheGroups: {
-	// 		// 	        "default": {    
-	// 		// 	            "minChunks": 2,
+	optimization: {
+		splitChunks: false,
+		// splitChunks: {
+		// 	chunks: "all",
+		// 	minSize: 0, // 默认是30kb，minSize设置为0之后
+		// 	// cacheGroups: {
+		// 	// 	        "default": {    
+		// 	// 	            "minChunks": 2,
 
-	// 		// 	        },
-	// 		// 	        "vendors": {
-	// 		// 		            "minChunks": 1,
-	// 		// 	        }
-	// 		// 	    }
-	// 	  }
-	//   },
+		// 	// 	        },
+		// 	// 	        "vendors": {
+		// 	// 		            "minChunks": 1,
+		// 	// 	        }
+		// 	// 	    }
+		//   }
+	  },
 	
 	// plugins: [new CusPluginPlugin1()]
 	// plugins: [new HtmlWebpackPlugin()]
 	plugins: [
-	  new SplitChunksPlugin(),
+	  new SplitChunksPlugin({
+		  chunks:"all",
+		  minSize:0,
+	  }),
 	  new CleanWebpackPlugin({
 		verbost: true, // write logs to console
 		dry: false,

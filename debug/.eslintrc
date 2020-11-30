@@ -1,9 +1,16 @@
 {
   "env": {
     "es6": true,
-    "browser": true
+    "browser": true,
+    "node": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": [
+    "plugin:react/recommended",
+     "airbnb",
+    "eslint:recommended",
+		"plugin:node/recommended",
+		"plugin:prettier/recommended"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
