@@ -40,10 +40,10 @@ module.exports = {
 		]
 	},
 	optimization: {
-		splitChunks: false,
+		// splitChunks: false,
 		// splitChunks: {
 		// 	chunks: "all",
-		// 	minSize: 0, // 默认是30kb，minSize设置为0之后
+		// 	minSize: 0, 
 		// 	// cacheGroups: {
 		// 	// 	        "default": {    
 		// 	// 	            "minChunks": 2,
@@ -54,6 +54,30 @@ module.exports = {
 		// 	// 	        }
 		// 	// 	    }
 		//   }
+		splitChunks:{
+			    "hidePathInfo": false,
+			    "chunks": "all",
+			    "minSize":0,
+			    "minChunks": 1,
+			//     "maxAsyncRequests": null,
+			    "automaticNameDelimiter": "~",
+			    "automaticNameMaxLength": 109,
+			//     "maxInitialRequests": null,
+			    "name": true,
+			    "cacheGroups": {
+			        "default": {    
+			            "automaticNamePrefix": "default",
+			            "reuseExistingChunk": true,
+			            "minChunks": 2,
+			            "priority": -20
+			        },
+			        "vendors": {
+			            "automaticNamePrefix": "vendors",
+			//             "test": "/[\\\\/]node_modules[\\\\/]/",
+			            "priority": -10
+			        }
+			    }
+			}
 	  },
 	
 	// plugins: [new CusPluginPlugin1()]
