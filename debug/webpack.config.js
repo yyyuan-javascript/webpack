@@ -6,6 +6,33 @@ const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const SplitChunksPlugin = require('./webpack-plugins/split-chunks-plugin');
 const [params0] = process.argv.slice(2)||[];
 const isAnalyze = params0 === 'analyze';
+const splitChunks = {
+	    "hidePathInfo": false,
+	    "chunks": "all",
+	    "minSize":0,
+	    "minChunks": 1,
+	//     "maxAsyncRequests": null,
+	    "automaticNameDelimiter": "~",
+	    "automaticNameMaxLength": 109,
+	//     "maxInitialRequests": null,
+	    "name": true,
+	    "cacheGroups": {
+	        "default": {   
+				"name":"defaultBundle",
+	            "automaticNamePrefix": "default",
+	            "reuseExistingChunk": true,
+	            "minChunks": 2,
+	            "priority": -20,
+	        },
+	        "vendors": {
+				"name":"vendorBundle",
+	            "automaticNamePrefix": "vendors",
+	//             "test": "/[\\\\/]node_modules[\\\\/]/",
+				"minChunks": 2,
+	            "priority": -10,
+	        }
+	    }
+	};
 module.exports = {
 	// devtool: "source-map",
 	context: __dirname,
@@ -54,39 +81,13 @@ module.exports = {
 		// 	// 	        }
 		// 	// 	    }
 		//   }
-		splitChunks:{
-			    "hidePathInfo": false,
-			    "chunks": "all",
-			    "minSize":0,
-			    "minChunks": 1,
-			//     "maxAsyncRequests": null,
-			    "automaticNameDelimiter": "~",
-			    "automaticNameMaxLength": 109,
-			//     "maxInitialRequests": null,
-			    "name": true,
-			    "cacheGroups": {
-			        "default": {    
-			            "automaticNamePrefix": "default",
-			            "reuseExistingChunk": true,
-			            "minChunks": 2,
-			            "priority": -20
-			        },
-			        "vendors": {
-			            "automaticNamePrefix": "vendors",
-			//             "test": "/[\\\\/]node_modules[\\\\/]/",
-			            "priority": -10
-			        }
-			    }
-			}
+		splitChunks,
 	  },
 	
 	// plugins: [new CusPluginPlugin1()]
 	// plugins: [new HtmlWebpackPlugin()]
 	plugins: [
-	  new SplitChunksPlugin({
-		  chunks:"all",
-		  minSize:0,
-	  }),
+	  new SplitChunksPlugin(splitChunks),
 	  new CleanWebpackPlugin({
 		verbost: true, // write logs to console
 		dry: false,

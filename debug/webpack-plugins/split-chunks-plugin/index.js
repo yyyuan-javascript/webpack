@@ -65,7 +65,13 @@ class SplitChunksPlugin {
                 // console.log(chunkSetsByCount);
 
                 // step 4: 创建chunks子集
-                const chunksInfoMap = createChunksInfoMap(modules, indexMap, chunkSetsByCount);
+                const chunksInfoMap = createChunksInfoMap({
+                  options:this.options,
+                  modules,
+                  indexMap,
+                  chunkSetsInGraph,
+                  chunkSetsByCount,
+                });
             });
   
   
