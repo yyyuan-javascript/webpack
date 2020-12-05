@@ -81,7 +81,7 @@ module.exports = {
 		// 	// 	        }
 		// 	// 	    }
 		//   }
-		splitChunks,
+		splitChunks:false,
 	  },
 	
 	// plugins: [new CusPluginPlugin1()]

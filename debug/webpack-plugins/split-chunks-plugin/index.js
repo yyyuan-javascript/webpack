@@ -1,6 +1,6 @@
 const { 
   createIndexMap,
-  getKey,
+  // getKey,
  } = require('./indexMap');
 const {
   createChunkSetsInGraph
@@ -11,6 +11,13 @@ const {
 const {
   createChunksInfoMap,
 } = require('./chunksInfoMap');
+const {
+  getBestEntry,
+} = require('./bestEntryKey');
+const {
+  isOverLap,
+} = require('./chunks');
+const GraphHelpers = require("../../../lib/GraphHelpers");
 /** @typedef {import("../../../lib/Compiler")} Compiler */
 /** @typedef {import("../../../lib/Chunk")} Chunk */
 /** @typedef {import("../../../lib/Module")} Module */
@@ -72,6 +79,53 @@ class SplitChunksPlugin {
                   chunkSetsInGraph,
                   chunkSetsByCount,
                 });
+
+                // step 5: 寻找BestEntryKey, 生成bundles
+                while(chunksInfoMap.size > 0){
+                  const {bestEntryKey, bestEntry} = getBestEntry(chunksInfoMap);
+                  let chunkName = bestEntry.name;
+                  let newChunk;
+                  chunksInfoMap.delete(bestEntryKey);
+
+                  // const selectedChunks = Array.from(bestEntry.chunks);
+                  
+                  // if(selectedChunks.length===0) continue;
+
+                  // const usedChunks = new Set(selectedChunks);
+                  const usedChunks = bestEntry.chunks;
+                  if(usedChunks.size === 0){continue;}
+                  // 向complication 添加新的chunk
+                  newChunk = compilation.addChunk(chunkName);
+                  for(let chunk of usedChunks){
+                    // Add graph connections for splitted chunk
+                    chunk.split(newChunk);
+                  }
+                  // Add a note to the chunk
+                  // newChunk.chunkReason = `split chunk (cache group: ${bestEntry.cacheGroup.key}) (name: ${chunkName})`;
+
+                  for(let module of bestEntry.modules){
+                    // 将bestEntry中的module关联到newChunk
+                    GraphHelpers.connectChunkAndModule(newChunk, module);
+                    // 将bestEntry 中的module从原来的entrychunk中移除
+                    for(let chunk of usedChunks){
+                      chunk.removeModule(module);
+                      module.rewriteChunkInReasons(chunk, [newChunk]);
+                    }
+                  }
+                  // 遍历chunksInfoMap 删除已经打包到newChunk中moduels
+                  for(let [key, info] of chunksInfoMap){
+                    if(isOverLap(info.chunks, usedChunks)){
+                      // const oldSize = info.modules.size;
+                      for(let module of bestEntry.modules){
+                        info.modules.delete(module);
+                        info.size -= module.size();
+                      }
+                      if(info.modules.size === 0){
+                        chunksInfoMap.delete(key);
+                      }
+                    }
+                  }
+                }// end while
             });
   
   

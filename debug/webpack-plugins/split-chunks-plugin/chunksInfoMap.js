@@ -113,7 +113,7 @@ function addModuleToChunksInfoMap(
        }
        // 合并相同chunk下的module
         info.modules.add(module);
-        info.size += module.size();
+        info.size += module.size(); // 打包后模块的大小
        if(!info.chunksKeys.has(selectedChunksKey)){
         info.chunksKeys.add(selectedChunksKey);
         for(let chunk of selectedChunks){
