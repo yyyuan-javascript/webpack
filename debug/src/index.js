@@ -1,9 +1,8 @@
 import {showContent, addBtn} from './dom';
-import {getDate} from './date';
-
+import {log} from './log';
 const handleClick = () => {
   import(/* webpackChunkName: "async" */"./async").then(({content}) => {
-    console.log("main",getDate());
+    log("main");
     showContent(content);
   });
 };

@@ -7,27 +7,17 @@ const SplitChunksPlugin = require('./webpack-plugins/split-chunks-plugin');
 const [params0] = process.argv.slice(2)||[];
 const isAnalyze = params0 === 'analyze';
 const splitChunks = {
-	    "hidePathInfo": false,
 	    "chunks": "all",
 	    "minSize":0,
-	    "minChunks": 1,
-	//     "maxAsyncRequests": null,
-	    "automaticNameDelimiter": "~",
-	    "automaticNameMaxLength": 109,
-	//     "maxInitialRequests": null,
 	    "name": true,
 	    "cacheGroups": {
 	        "default": {   
 				"name":"defaultBundle",
-	            "automaticNamePrefix": "default",
-	            "reuseExistingChunk": true,
 	            "minChunks": 2,
 	            "priority": -20,
 	        },
 	        "vendors": {
 				"name":"vendorBundle",
-	            "automaticNamePrefix": "vendors",
-	//             "test": "/[\\\\/]node_modules[\\\\/]/",
 				"minChunks": 2,
 	            "priority": -10,
 	        }
@@ -67,27 +57,14 @@ module.exports = {
 		]
 	},
 	optimization: {
-		// splitChunks: false,
-		// splitChunks: {
-		// 	chunks: "all",
-		// 	minSize: 0, 
-		// 	// cacheGroups: {
-		// 	// 	        "default": {    
-		// 	// 	            "minChunks": 2,
-
-		// 	// 	        },
-		// 	// 	        "vendors": {
-		// 	// 		            "minChunks": 1,
-		// 	// 	        }
-		// 	// 	    }
-		//   }
-		splitChunks:false,
+		splitChunks:false, // 禁用webpack自带的splitChunks
+		//splitChunks,
 	  },
 	
 	// plugins: [new CusPluginPlugin1()]
 	// plugins: [new HtmlWebpackPlugin()]
 	plugins: [
-	  new SplitChunksPlugin(splitChunks),
+	//   new SplitChunksPlugin(splitChunks), // 自定义插件
 	  new CleanWebpackPlugin({
 		verbost: true, // write logs to console
 		dry: false,

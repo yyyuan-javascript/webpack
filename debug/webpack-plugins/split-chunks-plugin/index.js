@@ -87,11 +87,6 @@ class SplitChunksPlugin {
                   let newChunk;
                   chunksInfoMap.delete(bestEntryKey);
 
-                  // const selectedChunks = Array.from(bestEntry.chunks);
-                  
-                  // if(selectedChunks.length===0) continue;
-
-                  // const usedChunks = new Set(selectedChunks);
                   const usedChunks = bestEntry.chunks;
                   if(usedChunks.size === 0){continue;}
                   // 向complication 添加新的chunk
@@ -115,7 +110,6 @@ class SplitChunksPlugin {
                   // 遍历chunksInfoMap 删除已经打包到newChunk中moduels
                   for(let [key, info] of chunksInfoMap){
                     if(isOverLap(info.chunks, usedChunks)){
-                      // const oldSize = info.modules.size;
                       for(let module of bestEntry.modules){
                         info.modules.delete(module);
                         info.size -= module.size();

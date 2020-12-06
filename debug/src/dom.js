@@ -1,7 +1,3 @@
-export const add = (a,b) => {
-    return a+b;
-};
-
 export const showContent = (content) => {
     const div = document.createElement('div');
     div.innerText = content;
