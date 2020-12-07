@@ -9,16 +9,15 @@ const isAnalyze = params0 === 'analyze';
 const splitChunks = {
 	    "chunks": "all",
 	    "minSize":0,
-	    "name": true,
 	    "cacheGroups": {
 	        "default": {   
 				"name":"defaultBundle",
-	            "minChunks": 2,
+	            "minChunks": 1,
 	            "priority": -20,
 	        },
 	        "vendors": {
 				"name":"vendorBundle",
-				"minChunks": 2,
+				"minChunks": 1,
 				// "minChunks": 1,test: /[\\/]src[\\/]dom.js/,
 	            "priority": -10,
 	        }
