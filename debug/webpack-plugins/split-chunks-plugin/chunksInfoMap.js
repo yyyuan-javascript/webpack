@@ -49,7 +49,8 @@ const createChunksInfoMap = ({
     const chunksInfoMap = new Map();
     for(const module of modules){
         // cacheGroup简化逻辑，默认module符合配置中所有cacheGroup的条件。
-        const cacheGroups = getCacheGroups(options);
+        const cacheGroups = getCacheGroups(options, module);
+        // console.log(module.rawRequest,cacheGroups.map(({key})=>key));
         // 创建comninations，获得所有可能的vendor的组合，即当前module最终可能被打包进哪些vendor中
         const chunksKey = getKey(indexMap,module.chunksIterable);
         let combs = combinationsCache.get(chunksKey);

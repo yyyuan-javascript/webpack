@@ -1,21 +1,31 @@
-const normalizeCacheGroups = (groupOption={}, key, {chunks="all"}={}) => {
+const normalizeCacheGroups = (groupOption = {}, key, { chunks = "all" } = {}) => {
     let chunksFilter;
-    if(chunks==="all"){
+    if (chunks === "all") {
         chunksFilter = (_) => true;
     }
 
-return{
-    chunksFilter,//
-    ...groupOption,
-    key,
-};
+    return {
+        chunksFilter,//
+        ...groupOption,
+        key,
+    };
 }
-const getCacheGroups = (options={}) => {
-    const {cacheGroups={}} = options;
+function checkTest(test, module = {}) {
+    if (test) {
+        return test.test(module.nameForCondition());
+    }
+    return true;
+}
+const getCacheGroups = (options = {}, module) => {
+    const { cacheGroups = {} } = options;
     let res = [];
-    for(let key of Object.keys(cacheGroups)){
-        let groupOption = normalizeCacheGroups(cacheGroups[key]||{},key,options,);
-        res.push(groupOption);
+    for (let key of Object.keys(cacheGroups)) {
+        const cacheGroup = cacheGroups[key];
+        // 校验test规则
+        if (cacheGroup && checkTest(cacheGroup.test, module)) {
+            let groupOption = normalizeCacheGroups(cacheGroups[key] || {}, key, options,);
+            res.push(groupOption);
+        }
     }
     return res;
 };

@@ -19,6 +19,7 @@ const splitChunks = {
 	        "vendors": {
 				"name":"vendorBundle",
 				"minChunks": 2,
+				// "minChunks": 1,test: /[\\/]src[\\/]dom.js/,
 	            "priority": -10,
 	        }
 	    }
@@ -64,7 +65,7 @@ module.exports = {
 	// plugins: [new CusPluginPlugin1()]
 	// plugins: [new HtmlWebpackPlugin()]
 	plugins: [
-	//   new SplitChunksPlugin(splitChunks), // 自定义插件
+	  new SplitChunksPlugin(splitChunks), // 自定义插件
 	  new CleanWebpackPlugin({
 		verbost: true, // write logs to console
 		dry: false,
