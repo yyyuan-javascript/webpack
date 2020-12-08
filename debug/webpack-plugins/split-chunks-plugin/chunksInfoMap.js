@@ -48,11 +48,12 @@ const createChunksInfoMap = ({
     /** @type {Map<string, ChunksInfoItem>} */
     const chunksInfoMap = new Map();
     for(const module of modules){
-        // cacheGroup简化逻辑，默认module符合配置中所有cacheGroup的条件。
+        // 4.1 获取当前module所属的cacheGroups
         const cacheGroups = getCacheGroups(options, module);
-        // console.log(module.rawRequest,cacheGroups.map(({key})=>key));
+         console.log('module 和cacheGroup的map',module.rawRequest,cacheGroups.map(({key})=>key));
         // 创建comninations，获得所有可能的vendor的组合，即当前module最终可能被打包进哪些vendor中
         const chunksKey = getKey(indexMap,module.chunksIterable);
+        // 4.2 生成combs
         let combs = combinationsCache.get(chunksKey);
         if(combs === undefined){
             combs = getCombs(chunksKey,chunkSetsInGraph, chunkSetsByCount);
@@ -64,7 +65,7 @@ const createChunksInfoMap = ({
             const cacheGroup = cacheGroupSource;// 此处需要处理默认配置
             for(const combinations of combs){
                 // combinations是可能的chunks组合,这一步是将可能的chunks组合按照cacheGroup的配置分类
-                // check minChunks条件
+                // 4.3 check minChunks条件
                 if(combinations.size < cacheGroup.minChunks){
                     continue;
                 }
@@ -83,6 +84,10 @@ const createChunksInfoMap = ({
             }
         });
     }
+    for(let [key,{modules}={}] of chunksInfoMap){
+        console.log(key,'=>',[...modules].map(item=>item.rawRequest));
+    }
+console.log('chunksInfoMap:', chunksInfoMap);
     return chunksInfoMap;
 };
 
@@ -112,7 +117,7 @@ function addModuleToChunksInfoMap(
         };
         chunksInfoMap.set(key,info);
        }
-       // 合并相同chunk下的module
+       //4.4 合并相同key下的module
         info.modules.add(module);
         info.size += module.size(); // 打包后模块的大小
        if(!info.chunksKeys.has(selectedChunksKey)){
@@ -131,7 +136,8 @@ function getSelectedChunks(combinations,selectedChunksCacheByChunksSet,chunksFil
     }
     let entry2 = entry.get(chunksFilter);
     if(entry2===undefined){
-        	/** @type {Chunk[]} */
+            /** @type {Chunk[]} */
+            // 4.3 用chunksFilter 过滤出能够拆分代码的chunk
         let selectedChunks = [...combinations].filter(chunksFilter);
         const key = getKey(indexMap,selectedChunks);
         entry2 = {

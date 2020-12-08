@@ -12,13 +12,13 @@ const splitChunks = {
 	    "cacheGroups": {
 	        "default": {   
 				"name":"defaultBundle",
-	            "minChunks": 1,
+	            "minChunks": 2,
 	            "priority": -20,
 	        },
 	        "vendors": {
 				"name":"vendorBundle",
-				"minChunks": 1,
-				// "minChunks": 1,test: /[\\/]src[\\/]dom.js/,
+				// "minChunks": 1,
+				"minChunks": 1,test: /[\\/]src[\\/](dom|log)\.js/,
 	            "priority": -10,
 	        }
 	    }
