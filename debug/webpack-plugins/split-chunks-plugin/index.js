@@ -83,6 +83,7 @@ class SplitChunksPlugin {
                 // step 5: 寻找BestEntryKey, 生成bundles
                 while(chunksInfoMap.size > 0){
                   const {bestEntryKey, bestEntry} = getBestEntry(chunksInfoMap);
+                  console.log('bestEntryKey: ',bestEntryKey,'=>',JSON.stringify([...bestEntry.modules].map(item=>item.rawRequest)));
                   let chunkName = bestEntry.name;
                   let newChunk;
                   chunksInfoMap.delete(bestEntryKey);
@@ -109,6 +110,7 @@ class SplitChunksPlugin {
                   }
                   // 遍历chunksInfoMap 删除已经打包到newChunk中moduels
                   for(let [key, info] of chunksInfoMap){
+                    // 当chunkInfoMap中元素的chunks 和bestEntry的chunks有交集时，说明该元素中可能有文件已经被加到新的chunk中，需要从旧的chunks中剔除
                     if(isOverLap(info.chunks, usedChunks)){
                       for(let module of bestEntry.modules){
                         info.modules.delete(module);

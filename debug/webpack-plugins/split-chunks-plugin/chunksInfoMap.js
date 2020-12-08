@@ -50,7 +50,7 @@ const createChunksInfoMap = ({
     for(const module of modules){
         // 4.1 获取当前module所属的cacheGroups
         const cacheGroups = getCacheGroups(options, module);
-         console.log('module 和cacheGroup的map',module.rawRequest,cacheGroups.map(({key})=>key));
+         console.log('module 和cacheGroup的map',module.rawRequest,JSON.stringify(cacheGroups.map(({key})=>key)));
         // 创建comninations，获得所有可能的vendor的组合，即当前module最终可能被打包进哪些vendor中
         const chunksKey = getKey(indexMap,module.chunksIterable);
         // 4.2 生成combs
@@ -84,10 +84,11 @@ const createChunksInfoMap = ({
             }
         });
     }
+    // just for console.log
     for(let [key,{modules}={}] of chunksInfoMap){
-        console.log(key,'=>',[...modules].map(item=>item.rawRequest));
+        console.log(key,'=>',JSON.stringify([...modules].map(item=>item.rawRequest)));
     }
-console.log('chunksInfoMap:', chunksInfoMap);
+// console.log('chunksInfoMap:', chunksInfoMap);
     return chunksInfoMap;
 };
 
